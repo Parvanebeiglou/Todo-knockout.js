@@ -33,15 +33,11 @@
     this.completed(!this.completed());
   };
 
-  TodoViewModel.prototype.editTodo = function () {
+  TodoViewModel.prototype.editTodo = function (_, event) {
     this.draftTitle(this.title());
     this.onEdit(this);
-    setTimeout(function () {
-      const input = document.querySelector('.edit-input');
-      if (input) {
-        input.focus();
-      }
-    }, 0);
+    const input = event.currentTarget.closest('li').querySelector('.edit-input');
+    setTimeout(() => input.focus(), 0);
   };
 
   TodoViewModel.prototype.saveTodo = function () {
@@ -165,51 +161,13 @@
     return true;
   };
 
-  function setupBindings() {
-    const todoBox = document.querySelector('.todo-box');
-    const input = document.getElementById('todo-input');
-    const addButton = document.getElementById('add-button');
-    const list = document.getElementById('todoList');
-
-    input.removeAttribute('onkeydown');
-    addButton.removeAttribute('onclick');
-    input.setAttribute(
-      'data-bind',
-      'textInput: newTodoTitle, event: { keydown: onAddKeydown }',
-    );
-    addButton.setAttribute('data-bind', 'click: addTodo');
-
-    document.querySelectorAll('.filter-button').forEach((button) => {
-      const filter = button.dataset.filter;
-      button.removeAttribute('onclick');
-      button.setAttribute(
-        'data-bind',
-        `click: function () { currentFilter('${filter}'); }, css: { active: currentFilter() === '${filter}' }`,
-      );
-    });
-
-    list.innerHTML = `
-      <li data-bind="css: { completed: completed }">
-        <span class="todo-title" data-bind="text: title, visible: !isEditing()"></span>
-        <input class="edit-input" type="text" data-bind="textInput: draftTitle, visible: isEditing, event: { keydown: onEditKeydown }" />
-        <div class="todo-actions">
-          <button class="todo-button" type="button" data-bind="text: completed() ? 'Undo' : 'Complete', click: toggleTodo, visible: !isEditing()"></button>
-          <button class="todo-button" type="button" data-bind="click: editTodo, visible: !isEditing()">Edit</button>
-          <button class="todo-button remove" type="button" data-bind="click: removeTodo, visible: !isEditing()">Remove</button>
-          <button class="todo-button" type="button" data-bind="click: saveTodo, visible: isEditing">Save</button>
-          <button class="todo-button" type="button" data-bind="click: cancelEdit, visible: isEditing">Cancel</button>
-        </div>
-      </li>`;
-    list.setAttribute('data-bind', 'foreach: filteredTodos');
-    ko.applyBindings(new AppViewModel(), todoBox);
-  }
-
-  const knockoutScript = document.createElement('script');
-  knockoutScript.src =
-    'https://cdn.jsdelivr.net/npm/knockout@3.5.1/build/output/knockout-latest.js';
-  knockoutScript.onload = setupBindings;
-  knockoutScript.onerror = function () {
-    console.error('Could not load Knockout.js from jsDelivr.');
+  AppViewModel.prototype.setFilter = function (filter) {
+    this.currentFilter(filter);
   };
-  document.head.appendChild(knockoutScript);
+
+  const todoBox = document.querySelector('.todo-box');
+  if (!todoBox) {
+    throw new Error('Could not find the todo app root element.');
+  }
+  ko.applyBindings(new AppViewModel(), todoBox);
 })();

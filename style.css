@@ -1,0 +1,180 @@
+body {
+    background-color: rgb(245, 236, 227);
+    align-content: center;
+    width: 100%;
+    height: 100%;
+    display: block;
+    margin: 0;
+}
+
+.line {
+    background-color: black;
+    width: 4px;
+    height: 32px;
+    position: absolute;
+    left: 24%;
+    top: 12px;
+    border-radius: 2px;
+    z-index: 1;
+}
+
+.line2 {
+    background-color: black;
+    width: 4px;
+    height: 32px;
+    position: absolute;
+    left: 76%;
+    top: 12px;
+    border-radius: 2px;
+    z-index: 1;
+}
+
+.todo-box {
+    background-color: rgb(73, 172, 34);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    margin: 24px auto;
+    border-radius: 2px 2px 22px 22px;
+    position: relative;
+}
+
+.input-section {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    margin: 4px;
+    max-width: 480px;
+    min-width: 260px;
+}
+
+#todo-input {
+    width: 100%;
+    margin: 4px;
+    padding: 8px 8px;
+    display: inline;
+    border: none;
+    border-radius: 4px;
+}
+
+#add-button {
+    width: 56px;
+    margin: 4px;
+    border: none;
+    background-color: rgb(1, 67, 45);
+    padding: 8px 16px;
+    display: inline;
+    border-radius: 4px;
+    color: white;
+}
+
+#add-button:hover {
+    background-color: rgb(0, 50, 33);
+}
+
+#add-button:active {
+    background-color: rgb(0, 87, 58)
+}
+
+.filter-section {
+    display: flex;
+    gap: 8px;
+    margin: 12px 4px 4px;
+}
+
+.filter-button,
+.todo-button {
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 6px 10px;
+}
+
+.filter-button {
+    background-color: rgb(194, 238, 176);
+    color: rgb(1, 67, 45);
+}
+
+.filter-button:hover,
+.filter-button.active {
+    background-color: rgb(1, 67, 45);
+    color: white;
+}
+
+#todoList {
+    width: 80%;
+    margin: 4px;
+    padding: 16px;
+}
+
+#todoList li {
+    align-items: center;
+    background-color: white;
+    border-radius: 4px;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    list-style: none;
+    margin: 8px 0;
+    padding: 10px;
+}
+
+#todoList li.completed {
+    background-color: rgb(213, 213, 213);
+    color: rgb(90, 90, 90);
+    text-decoration: line-through;
+}
+
+.todo-title {
+    overflow-wrap: anywhere;
+}
+
+.edit-input {
+    border: 1px solid rgb(1, 67, 45);
+    border-radius: 4px;
+    flex: 1;
+    min-width: 0;
+    padding: 6px;
+}
+
+.todo-actions {
+    display: flex;
+    flex-shrink: 0;
+    gap: 4px;
+    text-decoration: none;
+}
+
+.todo-button {
+    background-color: rgb(1, 67, 45);
+    color: white;
+}
+
+.todo-button:hover {
+    background-color: rgb(0, 50, 33);
+}
+
+.todo-button.remove {
+    background-color: rgb(151, 44, 44);
+}
+
+.todo-button.remove:hover {
+    background-color: rgb(115, 29, 29);
+}
+
+@media (max-width: 600px) {
+    .todo-box {
+        width: 90%;
+    }
+
+    #todoList li {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .todo-actions {
+        justify-content: flex-end;
+    }
+}

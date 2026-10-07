@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Todo List</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="line"></div>
+    <div class="line2"></div>
+    <div class="todo-box">
+      <h2>Todo List</h2>
+      <div class="input-section">
+        <input
+          id="todo-input"
+          type="text"
+          placeholder="Enter a todo"
+          data-bind="textInput: newTodoTitle, event: { keydown: onAddKeydown }"
+        />
+        <button id="add-button" type="button" data-bind="click: addTodo">Add</button>
+      </div>
+      <div class="filter-section" aria-label="Filter todos">
+        <button
+          class="filter-button"
+          type="button"
+          data-bind="click: function () { setFilter('all'); }, css: { active: currentFilter() === 'all' }"
+        >All</button>
+        <button
+          class="filter-button"
+          type="button"
+          data-bind="click: function () { setFilter('active'); }, css: { active: currentFilter() === 'active' }"
+        >Active</button>
+        <button
+          class="filter-button"
+          type="button"
+          data-bind="click: function () { setFilter('completed'); }, css: { active: currentFilter() === 'completed' }"
+        >Completed</button>
+      </div>
+      <ul id="todoList" data-bind="foreach: filteredTodos">
+        <li data-bind="css: { completed: completed }">
+          <span
+            class="todo-title"
+            data-bind="text: title, visible: !isEditing()"
+          ></span>
+          <input
+            class="edit-input"
+            type="text"
+            data-bind="textInput: draftTitle, visible: isEditing, event: { keydown: onEditKeydown }"
+          />
+          <div class="todo-actions">
+            <button
+              class="todo-button"
+              type="button"
+              data-bind="text: completed() ? 'Undo' : 'Complete', click: toggleTodo, visible: !isEditing()"
+            ></button>
+            <button
+              class="todo-button"
+              type="button"
+              data-bind="click: editTodo, visible: !isEditing()"
+            >Edit</button>
+            <button
+              class="todo-button remove"
+              type="button"
+              data-bind="click: removeTodo, visible: !isEditing()"
+            >Remove</button>
+            <button
+              class="todo-button"
+              type="button"
+              data-bind="click: saveTodo, visible: isEditing"
+            >Save</button>
+            <button
+              class="todo-button"
+              type="button"
+              data-bind="click: cancelEdit, visible: isEditing"
+            >Cancel</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/knockout@3.5.1/build/output/knockout-latest.js"></script>
+    <script src="todo-knockout.js"></script>
+  </body>
+</html>
